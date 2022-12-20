@@ -26,17 +26,17 @@ public class User {
     @Id
     private int id;
 
-    @NotBlank
-    @Size(max = 255)
+    @NotBlank(message = "user.name.not-blank")
+    @Size(max = 255, message = "user.name.too-big")
     private String name;
 
-    @NotBlank
-    @Email
-    @Size(max = 255)
+    @NotBlank(message = "user.email.not-blank")
+    @Email(message = "user.email.invalid")
+    @Size(max = 255, message = "user.email.too-big")
     private String email;
 
-    @NotBlank
-    @Size(max = 255)
+    @NotBlank(message = "user.password.not-blank")
+    @Size(max = 255, message = "user.password.too-big")
     @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
 
