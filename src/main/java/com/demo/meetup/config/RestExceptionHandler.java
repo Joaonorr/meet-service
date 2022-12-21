@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 
 @ControllerAdvice
 @RequiredArgsConstructor
-public class RestExceptionHandle extends ResponseEntityExceptionHandler {
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Value("${app.language}")
     private String appLanguageDefault;
@@ -35,8 +35,12 @@ public class RestExceptionHandle extends ResponseEntityExceptionHandler {
     private final MessageSource messageSource;
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-        HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+        MethodArgumentNotValidException ex,
+        HttpHeaders headers, 
+        HttpStatus status, 
+        WebRequest request
+    ) {
         var language = getLanguage((ServletWebRequest) request);
         var error = ErrorResponse.builder()
         .errors(getErros(ex, language))

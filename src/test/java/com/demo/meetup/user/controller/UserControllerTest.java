@@ -1,5 +1,6 @@
 package com.demo.meetup.user.controller;
 
+import java.net.URI;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
@@ -56,10 +57,36 @@ public class UserControllerTest extends GenericControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get(URL + 1))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.path").value(URL + 1))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.path").value(URL + "1"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(HttpStatus.NOT_FOUND.value()))
             .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(getMessage(UserNotFoundException.MESSAGE_KEY)));
 
+    }
+
+    @Test
+    @DisplayName("SHOULD return status code no contente WHEN delete user by valid id")
+    public void deleteById_valid() throws Exception {
+
+        var userId = 1;
+
+        Mockito.when(repository.existsById(userId)).thenReturn(true);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL + userId))
+            .andExpect(MockMvcResultMatchers.status().isNoContent())
+            .andExpect(MockMvcResultMatchers.jsonPath("$").doesNotExist());
+            
+    }
+
+    @Test
+    @DisplayName("SHOULD return status code not found WHEN delete user by id")
+    public void deleteById_invalind() throws Exception {
+        var userId = 1;
+        Mockito.when(repository.existsById(userId)).thenReturn(false);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL + userId))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.path").value(URL + userId))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(HttpStatus.NOT_FOUND.value()))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(UserNotFoundException.MESSAGE_KEY));
     }
 
 }

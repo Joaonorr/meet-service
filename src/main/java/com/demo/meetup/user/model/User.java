@@ -1,6 +1,7 @@
 package com.demo.meetup.user.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -24,6 +25,7 @@ import lombok.NoArgsConstructor;
 public class User {
     
     @Id
+    @GeneratedValue
     private int id;
 
     @NotBlank(message = "user.name.not-blank")

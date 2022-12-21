@@ -1,5 +1,6 @@
 package com.demo.meetup.user.service;
 
+
 import org.springframework.stereotype.Service;
 
 import com.demo.meetup.user.exception.AlreadUserEmailException;
@@ -24,5 +25,13 @@ public class UserService {
             throw new AlreadUserEmailException();
         }
         return repository.save(user);
+    }
+
+    public void delete(Integer id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new UserNotFoundException();
+        }
     }
 }

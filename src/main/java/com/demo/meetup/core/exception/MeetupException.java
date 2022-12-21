@@ -9,9 +9,10 @@ public class MeetupException extends ResponseStatusException {
 
     @Getter
     private final String messageKey;
-    
+
     public MeetupException(HttpStatus status, String messageKey) {
         super(status, messageKey);
         this.messageKey = messageKey;
     }
+    
 }
